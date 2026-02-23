@@ -58,3 +58,11 @@ def add_company(c_name, role, min_cgpa, package):
     conn.commit()
     print("Company added successfully!")
     conn.close()
+
+def get_all_students():
+    conn = sqlite3.connect('db/student.db')
+    c=conn.cursor()
+    c.execute("SELECT stud_id, u_name, role FROM users WHERE role = 'student'")
+    students = c.fetchall()
+    conn.close()
+    return students

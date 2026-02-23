@@ -1,5 +1,6 @@
 from db_ops import *
 from db_setup import *
+from db_ops import get_all_students
 
 def admin_menu():
     while True:
@@ -10,7 +11,15 @@ def admin_menu():
             print(" MANAGE COMPANY ")
             add_a_company()
         elif(ch==2):
-            print("All students")
+            print("=== All Students ===")
+            students = get_all_students()
+            if not students:
+                print("No students found.")
+            else:
+                print(f"{'Student ID':<15} {'Name':<20} {'Role':<10}")
+                print("-" * 45)
+                for stud_id, name, role in students:
+                    print(f"{stud_id:<15} {name:<20} {role:<10}")
         elif(ch==3):
             print("")
         elif(ch==4):
