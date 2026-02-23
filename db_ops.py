@@ -1,11 +1,6 @@
 import sqlite3
 import bcrypt
-def setup_usertab():
-    conn = sqlite3.connect('db/student.db')
-    c=conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS users (user_id INTEGER PRIMARY KEY AUTOINCREMENT, stud_id INTEGER UNIQUE, u_name VARCHAR(30), pass_hash VARCHAR(60), role VARCHAR(30))''')
-    conn.commit()
-    conn.close()
+
 
 def add_students(u_name, u_pass, u_role, u_id):
     conn = sqlite3.connect('db/student.db')
@@ -54,4 +49,12 @@ def remove_student(u_id):
     c.execute("DELETE FROM users WHERE stud_id = ?", (u_id,))
     conn.commit()
     print("Student removed successfully!")
+    conn.close()
+
+def add_company(c_name, role, min_cgpa, package):
+    conn = sqlite3.connect('db/student.db')
+    c=conn.cursor()
+    c.execute('''INSERT INTO company(company_name, role_offered, min_cgpa, package) VALUES(?, ?, ?, ?)''', (c_name, role, min_cgpa, package))
+    conn.commit()
+    print("Company added successfully!")
     conn.close()

@@ -1,9 +1,9 @@
 from db_ops import *
 from admin_menu import *
-setup_usertab()
+from db_setup import *
+
+
 print("*****PLACEMENT MANAGEMENT SYSTEM*****")
-
-
 
 def user_auth():
     auth_user = input("Enter your username: ")

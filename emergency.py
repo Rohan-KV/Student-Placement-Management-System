@@ -1,4 +1,6 @@
 from db_ops import *
+from db_setup import *
+
 setup_usertab()
 
 def add_stu():
@@ -7,5 +9,5 @@ def add_stu():
     u_pass = input("Enter password: ")
     u_role = input("Give role: ")
     add_students(u_name, u_pass, u_role, u_id)
-
+    
 add_stu()
