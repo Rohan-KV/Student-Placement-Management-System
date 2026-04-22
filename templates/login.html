@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel">
+  <div class="panel-header">
+    <h1>Welcome Back</h1>
+    <p>Sign in to continue managing placements.</p>
+  </div>
+  <form method="post" class="form">
+    <label>
+      Username
+      <input type="text" name="username" required />
+    </label>
+    <label>
+      Password
+      <input type="password" name="password" required />
+    </label>
+    <button type="submit">Login</button>
+  </form>
+  <div class="form-footer">
+    <span>New student?</span>
+    <a href="{{ url_for('register') }}">Create an account</a>
+  </div>
+</section>
+{% endblock %}

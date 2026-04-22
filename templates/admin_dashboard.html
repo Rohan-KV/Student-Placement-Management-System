@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Admin Command Center</h1>
+    <p>Track placements, manage companies, and review applications in one place.</p>
+  </div>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value">{{ company_count }}</div>
+      <div class="stat-label">Companies</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">{{ student_count }}</div>
+      <div class="stat-label">Students</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">{{ application_count }}</div>
+      <div class="stat-label">Applications</div>
+    </div>
+  </div>
+</section>
+
+<section class="cards">
+  <a class="card" href="{{ url_for('admin_companies') }}">
+    <h3>Manage Companies</h3>
+    <p>Add new recruiters and track eligibility requirements.</p>
+  </a>
+  <a class="card" href="{{ url_for('admin_students') }}">
+    <h3>View Students</h3>
+    <p>See all registered students and their academic details.</p>
+  </a>
+  <a class="card" href="{{ url_for('admin_applications') }}">
+    <h3>Review Applications</h3>
+    <p>Update application status and issue offers.</p>
+  </a>
+</section>
+{% endblock %}

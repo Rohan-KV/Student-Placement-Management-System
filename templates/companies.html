@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel">
+  <div class="panel-header">
+    <h1>Companies</h1>
+    <p>{% if is_admin %}Add and manage recruiting companies.{% else %}Apply to eligible roles.{% endif %}</p>
+  </div>
+
+  {% if is_admin %}
+  <form method="post" class="form grid">
+    <label>
+      Company name
+      <input type="text" name="company_name" required />
+    </label>
+    <label>
+      Role offered
+      <input type="text" name="role_offered" required />
+    </label>
+    <label>
+      Minimum CGPA
+      <input type="number" step="0.01" min="0" max="10" name="min_cgpa" required />
+    </label>
+    <label>
+      Package (LPA)
+      <input type="number" step="0.01" min="0" name="package" required />
+    </label>
+    <button type="submit" class="full">Add Company</button>
+  </form>
+  {% endif %}
+</section>
+
+<section class="table-wrap">
+  <div class="table-toolbar">
+    <input type="text" placeholder="Search companies" data-search="company" />
+  </div>
+  <table class="table" data-table="company">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Min CGPA</th>
+        <th>Package</th>
+        {% if not is_admin %}
+        <th>Eligibility</th>
+        <th>Action</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in companies %}
+      <tr>
+        <td>{{ c.company_name }}</td>
+        <td>{{ c.role_offered }}</td>
+        <td>{{ "%.2f"|format(c.min_cgpa) }}</td>
+        <td>{{ "%.2f"|format(c.package) }} LPA</td>
+        {% if not is_admin %}
+          {% set eligible = student.cgpa is not none and student.cgpa >= c.min_cgpa %}
+          <td>
+            <span class="badge {{ 'success' if eligible else 'warn' }}">
+              {{ 'Eligible' if eligible else 'Not eligible' }}
+            </span>
+          </td>
+          <td>
+            {% if c.company_id in applied_ids %}
+              <span class="badge neutral">Applied</span>
+            {% elif eligible %}
+              <form method="post" action="{{ url_for('apply_company', company_id=c.company_id) }}">
+                <button type="submit" class="ghost">Apply</button>
+              </form>
+            {% else %}
+              <span class="muted">-</span>
+            {% endif %}
+          </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

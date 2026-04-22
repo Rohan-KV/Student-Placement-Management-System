@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel">
+  <div class="panel-header">
+    <h1>Registered Students</h1>
+    <p>Overview of all student profiles.</p>
+  </div>
+</section>
+
+<section class="table-wrap">
+  <div class="table-toolbar">
+    <input type="text" placeholder="Search students" data-search="students" />
+  </div>
+  <table class="table" data-table="students">
+    <thead>
+      <tr>
+        <th>Student ID</th>
+        <th>Full name</th>
+        <th>Username</th>
+        <th>Department</th>
+        <th>CGPA</th>
+        <th>Registered</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in students %}
+      <tr>
+        <td>{{ s.stud_id }}</td>
+        <td>{{ s.full_name or '-' }}</td>
+        <td>{{ s.u_name }}</td>
+        <td>{{ s.dept or '-' }}</td>
+        <td>{{ s.cgpa or '-' }}</td>
+        <td>{{ s.created_at or '-' }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

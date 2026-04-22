@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ title or "Placement Management" }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <div class="bg"></div>
+  <header class="site-header">
+    <div class="brand">
+      <div class="brand-mark">PMS</div>
+      <div>
+        <div class="brand-title">Placement Management</div>
+        <div class="brand-sub">College Career Office</div>
+      </div>
+    </div>
+    <nav class="nav">
+      {% if session.get('user_id') %}
+        {% if session.get('role') == 'Admin' %}
+          <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+          <a href="{{ url_for('admin_companies') }}">Companies</a>
+          <a href="{{ url_for('admin_students') }}">Students</a>
+          <a href="{{ url_for('admin_applications') }}">Applications</a>
+        {% else %}
+          <a href="{{ url_for('student_dashboard') }}">Dashboard</a>
+          <a href="{{ url_for('student_companies') }}">Companies</a>
+          <a href="{{ url_for('student_applications') }}">My Applications</a>
+        {% endif %}
+        <a href="{{ url_for('logout') }}" class="pill">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}" class="pill">Register</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+        <div class="flash-stack">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

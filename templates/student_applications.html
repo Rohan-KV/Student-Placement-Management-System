@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel">
+  <div class="panel-header">
+    <h1>My Applications</h1>
+    <p>Track your progress and accept offers.</p>
+  </div>
+</section>
+
+<section class="table-wrap">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Company</th>
+        <th>Role</th>
+        <th>Package</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in applications %}
+      <tr>
+        <td>{{ a.company_name }}</td>
+        <td>{{ a.role_offered }}</td>
+        <td>{{ "%.2f"|format(a.package) }} LPA</td>
+        <td><span class="badge neutral">{{ a.status }}</span></td>
+        <td>
+          {% if a.status == 'Offered' %}
+            <form method="post">
+              <input type="hidden" name="application_id" value="{{ a.application_id }}" />
+              <button type="submit" class="ghost">Accept Offer</button>
+            </form>
+          {% else %}
+            <span class="muted">-</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}
